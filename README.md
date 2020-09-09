@@ -13,6 +13,10 @@ on visited site, the script does not support DNS tcp connections<br><br>
 if you gonna try to redirect a domain to IP that runs multi domains, most of the time you will get 404 error because you redirecting
 a domain that the IP does not support
 
+## problem with node http-server
+if you are using (for tests) node `http-server`, the script will send the correct spoofed ip but some times the `http-server` wont complete the 3-way handshake
+this is a problem with the `http-server` and not the script, to fix it restart the server and refresh the browser, I recommend alternative for `http-server` 
+
 ## config file
 when running dumbns it will look for a config file (default name "dumbns.config.json" can be changed with `--config`), the config file is in JSON format
 
