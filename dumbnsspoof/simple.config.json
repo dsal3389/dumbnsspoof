@@ -1,0 +1,9 @@
+{
+	"targets": ["x.x.x.x", "x.x.x.x"],
+	"domains": {
+		"x.x.x.x": [
+			"spoofed-domain.com"
+		]
+	},
+	"interface": "eth0"
+}
