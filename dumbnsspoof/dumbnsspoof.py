@@ -94,7 +94,7 @@ def main(namespace):
     config.setdefault('ttl', namespace.ttl)
     config.setdefault('dns_mac', namespace.dns_mac)
 
-    if not (config['echo3'] and config['dns_mac']):
+    if config['echo3'] and not config['dns_mac']:
         raise ValueError('when using echo3 a dns-mac is required as well')
 
     logger.debug('config: ' + json.dumps(config, indent=4))
