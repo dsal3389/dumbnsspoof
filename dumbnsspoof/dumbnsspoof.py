@@ -2,16 +2,21 @@ import \
         os, sys, json, \
         argparse, socket, threading, \
         re, logging, ipaddress
-from scapy.all import *
+from scapy.all import (
+            sendp, IP, ICMP,
+            UDP, Ether, sniff,
+            DNS, DNSQR, DNSRR
+        )
 
 
 logger = logging.getLogger(__file__)
 
 
 class DnsSpoofer:
-    def __init__(self, targets, domains, interface, echo3, ttl, dns_mac):
+    def __init__(self, targets, exclude, domains, interface, echo3, ttl, dns_mac):
         self.targets = targets
         self.domains = domains
+        self.exclude = exclude
         self.interface = interface
         self.echo3 = echo3
         self.ttl   = ttl
@@ -27,6 +32,15 @@ class DnsSpoofer:
                 filter += f'src host {target}'
                 
                 if i < (len(self.targets) - 1):
+                    filter += ' or '
+
+        elif self.exclude:
+            filter += ' and '
+
+            for i, target in enumerate(self.exclude):
+                filter += f'not src host {target}'
+
+                if i < (len(self.exclude) - 1):
                     filter += ' or '
         
         if self.dns_mac:
@@ -88,6 +102,7 @@ def main(namespace):
         config = json.load(fp)
 
     config.setdefault('targets', [])
+    config.setdefault('exclude', [])
     config.setdefault('domains', {})
     config.setdefault('interface', namespace.interface)
     config.setdefault('echo3', namespace.echo3)
@@ -96,6 +111,9 @@ def main(namespace):
 
     if config['echo3'] and not config['dns_mac']:
         raise ValueError('when using echo3 a dns-mac is required as well')
+
+    if config['targets'] and config['exclude']:
+        raise ValueError('targets and exclude cannot the set at the same time')
 
     logger.debug('config: ' + json.dumps(config, indent=4))
 
