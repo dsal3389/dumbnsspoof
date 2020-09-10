@@ -3,6 +3,8 @@ dns spoofing tool
 
 dumbns is a DNS spoofing tool, the attack wont do MITM by it self, you need to do it by yourself, this script listen for DNS traffic and return a response base on the given config, if no requested domain was ask the script will drop the packet.
 
+support IPv4 and IPv6
+
 ## legal
 any use of this script on unauthorized networks make the user the responsible and not the developer
 
