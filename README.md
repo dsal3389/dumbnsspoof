@@ -26,6 +26,7 @@ when running dumbns it will look for a config file (default name "dumbns.config.
 |  dns_mac  |       string      | if added it will optimize the filtering, if added with -e3 it will optimize the filtering and the script will be able to send the real dns-server the ICMP type 3 packet |
 |   echo3   |        bool       |                                            send ICMP type3 code 3 to the real dns-server when match found (requires `dns_mac`)                                           |
 |  targets  |        list       |                                                                            targets list of IP                                                                            |
+|  exclude  |        list       |                                                          exclude target IP, cannot be set when `targets` are set                                                         |
 |  domains  | dict (aka js obj) |                                                     the key is the attacker IP, the value is a list or regex domains                                                     |
 | interface |       string      |                                                                        the interface to listen on                                                                        |
 
